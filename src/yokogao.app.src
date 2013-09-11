@@ -1,0 +1,14 @@
+%% -*- mode: erlang -*-
+%% ex: ft=erlang ts=2 sw=2 et
+{application, yokogao,
+  [
+    {description, "Erlang System Profiling Toolkit"},
+    {vsn, git},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib
+      ]},
+    {mod, { yokogao_app, []}},
+    {env, []}
+  ]}.
