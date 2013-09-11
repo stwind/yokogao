@@ -5,10 +5,9 @@
 
 -export([start_trace/0]).
 -export([start_trace/1]).
--export([start_trace/2]).
+-export([stop_trace/0]).
 
 -define(TIMEOUT, 1000).
--define(FPROF_FILE, "fprof.trace").
 
 %% ===================================================================
 %% Pbulic
@@ -21,26 +20,19 @@ stop() ->
     application:stop(?MODULE).
 
 start_trace() ->
-    start_trace([]).
+    fprof:trace([start, {procs,processes()}]),
+    ok.
 
-start_trace(Opts) ->
-    start_trace(Opts, ?TIMEOUT).
+start_trace(Time) ->
+    start_trace(),
+    timer:apply_after(Time, ?MODULE, stop_trace, []),
+    ok.
 
-start_trace(Opts, Timeout) ->
-    fprof:trace(getopts(Opts, default_opts([start]))),
-    yokogao_server:new_task(Timeout, ?FPROF_FILE).
+stop_trace() ->
+    fprof:trace(stop),
+    fprof:profile(),
+    fprof:analyse({dest, []}).
 
 %% ===================================================================
 %% Private
 %% ===================================================================
-
-getopts([{procs, Procs} | Rest], Opts) ->
-    Opts1 = lists:keyreplace(procs, 1, Opts, {procs, Procs}),
-    getopts(Rest, Opts1);
-getopts([_ | Rest], Opts) ->
-    getopts(Rest, Opts);
-getopts([], Opts) ->
-    Opts.
-
-default_opts(Opts) ->
-    [{procs, processes()}, {file, ?FPROF_FILE} | Opts].

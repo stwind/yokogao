@@ -12,4 +12,4 @@ erlgrind:
 	chmod u+x erlgrind
 
 grind: erlgrind
-	./erlgrind $(if $(FILE),$(FILE),"fprof.trace")
+	./erlgrind $(if $(FILE),$(FILE),"fprof.analysis")

@@ -23,5 +23,4 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    Children = [?CHILD(yokogao_server, worker)],
-    {ok, { {one_for_one, 5, 10}, Children} }.
+    {ok, { {one_for_one, 5, 10}, []} }.
