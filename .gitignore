@@ -12,6 +12,7 @@
 *.o
 *.plt
 /priv/log
-/bin/rebar
 *.coverdata
 rebar
+erlgrind
+fprof.*
