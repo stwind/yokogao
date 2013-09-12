@@ -84,6 +84,8 @@ trace_file(Name) ->
     lists:flatten([Name,"_",i2l(M),"_",i2l(D),"_",
             i2l(H),"_",i2l(Min),"_",i2l(S),".trace"]).
 
+fun_file({Mod, Fun}) ->
+    file(a2l(Mod) ++ "_" ++ a2l(Fun));
 fun_file(Fun) ->
     case erlang:fun_info(Fun, module) of
         {module, erl_eval} ->
