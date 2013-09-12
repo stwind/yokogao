@@ -34,7 +34,6 @@ start_trace() ->
 
 start_trace(Name) ->
     File = file(Name),
-    ok = filelib:ensure_dir(File),
     fprof:trace([start, {procs,processes()}, {file, File}]),
     {ok, File}.
 
@@ -66,7 +65,9 @@ get_env(Key, Default) ->
 
 file(Name) ->
     LogDir = get_env(log_dir, "log"),
-    filename:join(LogDir, trace_file(Name)).
+    File = filename:join(LogDir, trace_file(Name)),
+    ok = filelib:ensure_dir(File),
+    File.
 
 result_file(File) ->
     Dir = filename:dirname(File),
