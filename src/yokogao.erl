@@ -32,11 +32,11 @@ trace_fun(Fun, Args) ->
 start_trace() ->
     start_trace(trace_file("fprof")).
 
-start_trace(File) ->
-    File1 = file(File),
-    ok = filelib:ensure_dir(File1),
-    fprof:trace([start, {procs,processes()}, {file, File1}]),
-    {ok, File1}.
+start_trace(Name) ->
+    File = file(Name),
+    ok = filelib:ensure_dir(File),
+    fprof:trace([start, {procs,processes()}, {file, File}]),
+    {ok, File}.
 
 trace_for() ->
     trace_for(?TIMEOUT, "fprof").
